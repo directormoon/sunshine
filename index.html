@@ -10,139 +10,117 @@
             --accent: #6366f1;
             --discord: #5865F2;
             --bg: #030303;
-            --glass: rgba(0, 0, 0, 0.82);
+            --glass: rgba(0, 0, 0, 0.85);
         }
 
-        /* BLOQUEIO TOTAL DE SCROLL */
+        /* RESET & LOCK SCROLL */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { 
-            height: 100%; 
-            width: 100%; 
-            overflow: hidden; /* Remove a possibilidade de puxar para baixo */
-            position: fixed; /* Trava a posição no mobile */
+            height: 100%; width: 100%; 
+            overflow: hidden; 
+            background-color: var(--bg);
         }
         
         body { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+            display: flex; justify-content: center; align-items: center; 
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg);
         }
 
-        /* FUNDO ESTÁTICO E FIXO */
+        /* FUNDO ESTÁTICO */
         body::before {
-            content: ""; 
-            position: fixed; 
-            top: 0; left: 0; width: 100%; height: 100%;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('banner.png') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
-            z-index: -2;
+            background-size: cover; z-index: -2;
         }
 
         body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(5px);
-            z-index: -1;
+            backdrop-filter: blur(12px); z-index: -1;
         }
 
         /* CARD PRINCIPAL */
         .stage-card {
-            width: 90%;
-            max-width: 400px;
-            max-height: 95vh; /* Garante que não ultrapassa a altura do ecrã */
+            width: 92%;
+            max-width: 450px;
             background: var(--glass);
-            border: 2px solid rgba(255, 0, 127, 0.4);
-            border-radius: 40px;
-            overflow-y: auto; /* Se o ecrã for minúsculo, o scroll fica só dentro do card */
-            scrollbar-width: none; /* Esconde barra de scroll no Firefox */
+            border: 2px solid rgba(255, 0, 127, 0.5);
+            border-radius: 35px; /* Cantos do card bonitos */
             backdrop-filter: blur(20px);
-            box-shadow: 0 0 60px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 127, 0.2);
+            box-shadow: 0 0 50px rgba(0,0,0,1), 0 0 20px rgba(255, 0, 127, 0.3);
             text-align: center;
             padding-bottom: 25px;
-            position: relative;
+            animation: fadeIn 0.8s ease;
         }
-        .stage-card::-webkit-scrollbar { display: none; } /* Esconde scroll no Chrome/Safari */
 
-        /* RESPONSIVIDADE PC */
-        @media (min-width: 768px) {
-            .stage-card { max-width: 500px; }
-            .link-card { padding: 16px 25px !important; }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .card-header {
-            width: 100%;
-            height: 100px;
-            background: linear-gradient(to bottom, rgba(255, 0, 127, 0.2), transparent);
+            width: 100%; height: 110px;
+            background: linear-gradient(to bottom, rgba(255, 0, 127, 0.25), transparent);
+            border-radius: 35px 35px 0 0;
         }
 
-        .profile-wrap {
-            margin-top: -60px;
-            position: relative;
-            z-index: 2;
-        }
+        .profile-wrap { margin-top: -65px; position: relative; z-index: 2; }
 
         .profile-img {
-            width: 120px;
-            height: 120px;
+            width: 130px; height: 130px;
             border-radius: 50%;
             border: 4px solid var(--primary);
-            background: #000;
             object-fit: cover;
             box-shadow: 0 0 30px var(--primary);
         }
 
         .social-links {
-            padding: 20px 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            padding: 25px;
+            display: flex; flex-direction: column; gap: 12px;
         }
 
+        /* BOTÃO E TRATAMENTO DOS PNGS DOS LINKS */
         .link-card {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
+            display: flex; align-items: center;
+            padding: 10px 15px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: 0.75rem;
-            transition: 0.3s;
+            border-radius: 18px; /* Cantos dos botões */
+            color: #fff; text-decoration: none;
+            font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1.5px; font-size: 0.8rem;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* AQUI OS CANTOS DOS PNGS FICAM BONS */
         .link-card img {
-            width: 26px; height: 26px;
-            object-fit: contain;
-            margin-right: 15px; 
+            width: 35px; height: 35px;
+            object-fit: cover; /* Ou 'contain' se quiseres o logo inteiro sem cortes */
+            border-radius: 10px; /* DEIXA OS CANTOS DOS PNGS ARREDONDADOS E BONITOS */
+            margin-right: 15px;
+            background: rgba(255, 255, 255, 0.03); /* Fundo subtil se o PNG for transparente */
         }
 
-        .link-card span { flex-grow: 1; text-align: center; margin-right: 26px; }
+        .link-card span { flex-grow: 1; text-align: center; margin-right: 35px; }
 
         .link-card:hover {
             background: var(--primary);
             border-color: var(--primary);
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(255, 0, 127, 0.4);
         }
 
-        .link-card.roblox:hover { background: var(--accent); }
-        .link-card.discord:hover { background: var(--discord); }
+        .link-card.roblox:hover { background: var(--accent); border-color: var(--accent); }
+        .link-card.discord:hover { background: var(--discord); border-color: var(--discord); }
 
         .footer-tag {
-            font-size: 0.6rem;
-            color: var(--primary);
-            opacity: 0.6;
-            text-transform: uppercase;
-            letter-spacing: 5px;
+            font-size: 0.6rem; color: var(--primary);
+            opacity: 0.6; text-transform: uppercase;
+            letter-spacing: 5px; margin-top: 5px;
+        }
+
+        /* AJUSTE PC */
+        @media (min-width: 1024px) {
+            .stage-card { max-width: 520px; }
+            .link-card { padding: 15px 25px; }
+            .link-card img { width: 40px; height: 40px; }
         }
     </style>
 </head>
@@ -150,11 +128,9 @@
 
     <div class="stage-card">
         <div class="card-header"></div>
-        
         <div class="profile-wrap">
             <img src="profile.png" alt="SunShine" class="profile-img">
         </div>
-
         <div class="social-links">
             <a href="https://www.tiktok.com/@sunshine_tkk?_r=1&_t=ZS-93jJ3aP3I6X" target="_blank" class="link-card">
                 <img src="tiktok.png" alt=""> <span>TikTok</span>
@@ -172,8 +148,7 @@
                 <img src="roblox.png" alt=""> <span>Roblox</span>
             </a>
         </div>
-
-        <div class="footer-tag">Eternal Show</div>
+        <div class="footer-tag">The Eternal Show</div>
     </div>
 
 </body>
