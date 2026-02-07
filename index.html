@@ -10,42 +10,48 @@
             --accent: #6366f1;
             --discord: #5865F2;
             --bg: #030303;
-            --glass: rgba(0, 0, 0, 0.85);
+            --glass: rgba(0, 0, 0, 0.8);
         }
 
-        /* TRAVAR SCROLL TOTAL */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { 
-            height: 100%; width: 100%; 
-            overflow: hidden; 
-            background-color: var(--bg);
-        }
         
         body { 
-            display: flex; justify-content: center; align-items: center; 
+            background-color: var(--bg); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
             font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
         }
 
-        /* FUNDO ESTÁTICO FIXO */
+        /* BANNER COMO FUNDO IMERSIVO */
         body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            content: ""; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%;
             background: url('banner.png') no-repeat center center;
-            background-size: cover; z-index: -2;
+            background-size: cover;
+            z-index: -2;
         }
 
+        /* CAMADA DE FOCO E CONTRASTE */
         body::after {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Escurece levemente o fundo */
-            backdrop-filter: blur(10px); z-index: -1;
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+            z-index: -1;
         }
 
-        /* CARD PRINCIPAL */
         .stage-card {
             width: 90%;
-            max-width: 420px; /* Tamanho equilibrado */
+            max-width: 400px;
             background: var(--glass);
-            border: 2px solid var(--primary);
+            border: 2px solid rgba(255, 0, 127, 0.4);
             border-radius: 40px;
+            overflow: hidden;
             backdrop-filter: blur(20px);
             box-shadow: 0 0 50px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 127, 0.2);
             text-align: center;
@@ -53,47 +59,70 @@
         }
 
         .card-header {
-            width: 100%; height: 100px;
+            width: 100%;
+            height: 120px;
             background: linear-gradient(to bottom, rgba(255, 0, 127, 0.2), transparent);
         }
 
-        .profile-wrap { margin-top: -70px; position: relative; z-index: 2; }
+        .profile-wrap {
+            margin-top: -70px;
+            position: relative;
+            z-index: 2;
+        }
 
+        /* PERFIL SEMPRE CIRCULAR */
         .profile-img {
-            width: 140px; height: 140px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             border: 4px solid var(--primary);
+            background: #000;
             object-fit: cover;
             box-shadow: 0 0 30px var(--primary);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        .profile-img:hover { transform: scale(1.08) rotate(3deg); }
 
         .social-links {
-            padding: 25px;
-            display: flex; flex-direction: column; gap: 15px;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        /* BOTÃO E ÍCONES ORIGINAIS */
+        /* BOTÃO COM TRATAMENTO PARA ÍCONES NÃO QUADRADOS */
         .link-card {
-            display: flex; align-items: center;
-            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            color: #fff; text-decoration: none;
-            font-weight: 800; text-transform: uppercase;
-            letter-spacing: 2px; font-size: 0.85rem;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
             transition: 0.3s;
+            position: relative;
         }
 
-        /* ÍCONES SEM RECORTE REDONDO */
+        /* AQUI ESTÁ A MÁGICA PARA O TIKTOK E OUTROS */
         .link-card img {
-            width: 32px; height: 32px;
-            object-fit: contain; /* Mantém o formato original (retangular/quadrado) */
-            border-radius: 0; /* GARANTE QUE NÃO FIQUEM REDONDOS */
-            margin-right: 15px;
+            width: 28px; 
+            height: 28px;
+            object-fit: contain; /* Não estica a imagem, mantém a proporção */
+            border-radius: 6px;  /* Arredondamento suave nas pontas */
+            margin-right: 15px; 
         }
 
-        .link-card span { flex-grow: 1; text-align: center; margin-right: 32px; }
+        .link-card span {
+            flex-grow: 1;
+            text-align: center;
+            margin-right: 28px; /* Equilibra o ícone para centrar o texto */
+        }
 
         .link-card:hover {
             background: var(--primary);
@@ -102,13 +131,17 @@
             box-shadow: 0 10px 20px rgba(255, 0, 127, 0.4);
         }
 
-        .link-card.roblox:hover { background: var(--accent); border-color: var(--accent); }
-        .link-card.discord:hover { background: var(--discord); border-color: var(--discord); }
+        /* CORES DE HOVER PERSONALIZADAS */
+        .link-card.roblox:hover { background: var(--accent); border-color: var(--accent); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4); }
+        .link-card.discord:hover { background: var(--discord); border-color: var(--discord); box-shadow: 0 10px 20px rgba(88, 101, 242, 0.4); }
 
         .footer-tag {
-            font-size: 0.65rem; color: var(--primary);
-            opacity: 0.6; text-transform: uppercase;
-            letter-spacing: 5px;
+            font-size: 0.6rem;
+            color: var(--primary);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 10px;
         }
     </style>
 </head>
