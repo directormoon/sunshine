@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SunShine | Stage</title>
+    <title>SunShine | Official Stage</title>
     <style>
         :root {
             --primary: #ff007f; 
-            --bg: #050505;
-            --glass: rgba(0, 0, 0, 0.85);
+            --accent: #6366f1;
+            --discord: #5865F2;
+            --bg: #030303;
+            --glass: rgba(0, 0, 0, 0.8);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,126 +21,158 @@
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             overflow: hidden;
         }
 
-        /* Fundo de Listras Estático */
+        /* BANNER COMO FUNDO IMERSIVO */
         body::before {
             content: ""; 
             position: fixed; 
-            top: 50%;
-            left: 50%;
-            width: 250vmax; 
-            height: 250vmax;
-            transform: translate(-50%, -50%);
-            background: repeating-conic-gradient(
-                from 0deg, 
-                #111 0deg 15deg, 
-                #050505 15deg 30deg
-            );
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('banner.png') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+        }
+
+        /* CAMADA DE FOCO E CONTRASTE */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
             z-index: -1;
         }
 
         .stage-card {
-            width: 100%;
-            max-width: 420px;
+            width: 90%;
+            max-width: 400px;
             background: var(--glass);
-            border: 1px solid rgba(255, 0, 127, 0.3);
-            border-radius: 30px;
+            border: 2px solid rgba(255, 0, 127, 0.4);
+            border-radius: 40px;
             overflow: hidden;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 127, 0.2);
             text-align: center;
-            margin: 20px;
+            padding-bottom: 30px;
         }
 
-        /* Banner Superior */
-        .banner {
+        .card-header {
             width: 100%;
-            height: 180px;
-            background: url('banner.png') no-repeat center center;
-            background-size: cover;
-            border-bottom: 4px solid var(--primary);
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(255, 0, 127, 0.2), transparent);
         }
 
-        /* Foto de Perfil */
         .profile-wrap {
-            margin-top: -65px;
+            margin-top: -70px;
             position: relative;
+            z-index: 2;
         }
 
+        /* PERFIL SEMPRE CIRCULAR */
         .profile-img {
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             border: 4px solid var(--primary);
             background: #000;
             object-fit: cover;
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
+            box-shadow: 0 0 30px var(--primary);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Links das Redes Sociais */
+        .profile-img:hover { transform: scale(1.08) rotate(3deg); }
+
         .social-links {
-            padding: 35px 25px;
+            padding: 30px 25px;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
+        /* BOTÃO COM TRATAMENTO PARA ÍCONES NÃO QUADRADOS */
         .link-card {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
             color: #fff;
             text-decoration: none;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-size: 0.8rem;
-            transition: all 0.3s ease;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        /* AQUI ESTÁ A MÁGICA PARA O TIKTOK E OUTROS */
+        .link-card img {
+            width: 28px; 
+            height: 28px;
+            object-fit: contain; /* Não estica a imagem, mantém a proporção */
+            border-radius: 6px;  /* Arredondamento suave nas pontas */
+            margin-right: 15px; 
+        }
+
+        .link-card span {
+            flex-grow: 1;
+            text-align: center;
+            margin-right: 28px; /* Equilibra o ícone para centrar o texto */
         }
 
         .link-card:hover {
             background: var(--primary);
             border-color: var(--primary);
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
-            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 0, 127, 0.4);
         }
 
-        /* Destaque sutil para o Roblox */
-        .link-card.roblox {
-            border-color: rgba(99, 102, 241, 0.4);
-        }
-        
-        .link-card.roblox:hover {
-            background: #6366f1;
-            border-color: #6366f1;
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-        }
+        /* CORES DE HOVER PERSONALIZADAS */
+        .link-card.roblox:hover { background: var(--accent); border-color: var(--accent); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4); }
+        .link-card.discord:hover { background: var(--discord); border-color: var(--discord); box-shadow: 0 10px 20px rgba(88, 101, 242, 0.4); }
 
+        .footer-tag {
+            font-size: 0.6rem;
+            color: var(--primary);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
     <div class="stage-card">
-        <div class="banner"></div>
+        <div class="card-header"></div>
         
         <div class="profile-wrap">
             <img src="profile.png" alt="SunShine" class="profile-img">
         </div>
 
         <div class="social-links">
-            <a href="https://www.tiktok.com/@sunshine_tkk?_r=1&_t=ZS-93jJ3aP3I6X" target="_blank" class="link-card">TikTok</a>
-            <a href="https://www.instagram.com/sunshine_otv?igsh=MTZ2a3Z0ZXdieHdoMA==" target="_blank" class="link-card">Instagram</a>
-            <a href="https://youtube.com/@eosunshinexz?si=lrolK-pCzc_1Rule" target="_blank" class="link-card">YouTube</a>
-            <a href="https://www.roblox.com/users/3394007409/profile" target="_blank" class="link-card roblox">Roblox</a>
+            <a href="https://www.tiktok.com/@sunshine_tkk?_r=1&_t=ZS-93jJ3aP3I6X" target="_blank" class="link-card">
+                <img src="tiktok.png" alt=""> <span>TikTok</span>
+            </a>
+            <a href="https://www.instagram.com/sunshine_otv?igsh=MTZ2a3Z0ZXdieHdoMA==" target="_blank" class="link-card">
+                <img src="instagram.png" alt=""> <span>Instagram</span>
+            </a>
+            <a href="https://youtube.com/@eosunshinexz?si=lrolK-pCzc_1Rule" target="_blank" class="link-card">
+                <img src="youtube.png" alt=""> <span>YouTube</span>
+            </a>
+            <a href="https://discord.gg/Yrmz9dJ5C9" target="_blank" class="link-card discord">
+                <img src="discord.png" alt=""> <span>Discord</span>
+            </a>
+            <a href="https://www.roblox.com/users/3394007409/profile" target="_blank" class="link-card roblox">
+                <img src="roblox.png" alt=""> <span>Roblox</span>
+            </a>
         </div>
+
+        <div class="footer-tag">The Eternal Show</div>
     </div>
 
 </body>
